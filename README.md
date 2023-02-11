@@ -1,82 +1,34 @@
-# ![Laravel RealWorld Example App](.github/readme/logo.png)
-
-[![RealWorld: Backend](https://img.shields.io/badge/RealWorld-Backend-blueviolet.svg)](https://github.com/gothinkster/realworld)
-[![Tests: status](https://github.com/f1amy/laravel-realworld-example-app/actions/workflows/tests.yml/badge.svg)](https://github.com/f1amy/laravel-realworld-example-app/actions/workflows/tests.yml)
-[![Coverage: percent](https://codecov.io/gh/f1amy/laravel-realworld-example-app/branch/main/graph/badge.svg)](https://codecov.io/gh/f1amy/laravel-realworld-example-app)
-[![Static Analysis: status](https://github.com/f1amy/laravel-realworld-example-app/actions/workflows/static-analysis.yml/badge.svg)](https://github.com/f1amy/laravel-realworld-example-app/actions/workflows/static-analysis.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellowgreen.svg)](https://opensource.org/licenses/MIT)
-
-> Example of a PHP-based Laravel application containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the [RealWorld](https://github.com/gothinkster/realworld) API spec.
-
-This codebase was created to demonstrate a backend application built with [Laravel framework](https://laravel.com/) including RESTful services, CRUD operations, authentication, routing, pagination, and more.
-
-We've gone to great lengths to adhere to the **Laravel framework** community style guides & best practices.
-
-For more information on how to this works with other frontends/backends, head over to the [RealWorld](https://github.com/gothinkster/realworld) repo.
-
-## How it works
-
-The API is built with [Laravel](https://laravel.com/), making the most of the framework's features out-of-the-box.
-
-The application is using a custom JWT auth implementation: [`app/Jwt`](./app/Jwt).
-
 ## Getting started
 
-The preferred way of setting up the project is using [Laravel Sail](https://laravel.com/docs/sail),
-for that you'll need [Docker](https://docs.docker.com/get-docker/) under Linux / macOS (or Windows WSL2).
+You'll need [Docker](https://docs.docker.com/get-docker/) under Linux / macOS (or Windows WSL2) and docker-compose.
 
 ### Installation
 
 Clone the repository and change directory:
 
-    git clone https://github.com/f1amy/laravel-realworld-example-app.git
+    git clone https://github.com/emkayDauda/laravel-realworld-example-app.git
     cd laravel-realworld-example-app
 
-Install dependencies (if you have `composer` locally):
+Copy .env.example into .env
 
-    composer create-project
+```
+    cp .env.example .env
+```
 
-Alternatively you can do the same with Docker:
+Build and start the project up using docker (you might need sudo privileges if you run this in an ec2 instance)
+```
+    docker-compose build app
+    docker-compose up -d
+```
 
-    docker run --rm -it \
-        --volume $PWD:/app \
-        --user $(id -u):$(id -g) \
-        composer create-project
+Next, run the startup script provided in the repo (again, you might need sudo)
+```
+    chmod +x startup.sh
+    ./startup.sh
+```
 
-Start the containers with PHP application and PostgreSQL database:
+Finally, go to your host ip address (or localhost if running on your computer) and you should see the laravel welcome page.
 
-    ./vendor/bin/sail up -d
+Check the endpoints to confirm the database works and has been seeded e.g `localhost/api/articles` or `<ip-address>/api/articles`
 
-(Optional) Configure a Bash alias for `sail` command:
-
-    alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'
-
-Migrate the database with seeding:
-
-    sail artisan migrate --seed
-
-## Usage
-
-The API is available at `http://localhost:3000/api` (You can change the `APP_PORT` in `.env` file).
-
-### Run tests
-
-    sail artisan test
-
-### Run PHPStan static analysis
-
-    sail php ./vendor/bin/phpstan
-
-### OpenAPI specification (not ready yet)
-
-Swagger UI will be live at [http://localhost:3000/api/documentation](http://localhost:3000/api/documentation).
-
-For now, please visit the specification [here](https://github.com/gothinkster/realworld/tree/main/api).
-
-## Contributions
-
-Feedback, suggestions, and improvements are welcome, feel free to contribute.
-
-## License
-
-The MIT License (MIT). Please see [`LICENSE`](./LICENSE) for more information.
+# ![Laravel RealWorld Example App](.github/readme/logo.png)
