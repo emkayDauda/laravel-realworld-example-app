@@ -46,8 +46,18 @@ services:
     volumes:
       - ./:/var/www
       - ./docker-compose/nginx:/etc/nginx/conf.d
+      - logs:/var/logs/nginx/access.log
+      - logs:/var/logs/nginx/error.log
     networks:
       - realworld
+  
+  startup-logger:
+    image: ubuntu:latest
+    container_name: Startup-Logs
+    restart: "no"
+    command: sh -c "echo Containers restarted at $$(date "+%F_%T") >> /logs/log.txt && cat /logs/log.txt && tail -f /etc/issue"
+    volumes:
+      - logs:/logs/
 
 networks:
   realworld:
@@ -56,4 +66,6 @@ networks:
 #Volumes
 volumes:
   dbdata:
+    driver: local
+  logs:
     driver: local
